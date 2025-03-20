@@ -1,0 +1,35 @@
+# Ignorer tous les dossiers node_modules dans tous les sous-dossiers
+**/node_modules/
+
+# Fichiers de log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Dossiers de build générés
+dist/
+build/
+
+# Fichiers et dossiers temporaires
+tmp/
+temp/
+*.tmp
+
+# Fichiers d'environnement (à garder en local)
+.env.*.local
+
+# Pour Create React App, si vous avez un dossier build généré dans le front-end
+client/build/
+
+# Fichiers/dossiers spécifiques aux IDE
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Fichiers système
+.DS_Store
+Thumbs.db
