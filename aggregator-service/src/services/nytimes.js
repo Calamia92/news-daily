@@ -3,7 +3,7 @@ const axios = require('axios');
 // Axios instance for New York Times Article Search API
 const nyTimesClient = axios.create({
     baseURL: 'https://api.nytimes.com/svc/search/v2',
-    params: { 'api-key': process.env.NYTIMES_KEY } // API key from .env (Note: param name is 'api-key')
+    params: { 'api-key': process.env.NYTIMES_KEY }
 });
 
 /**

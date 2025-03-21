@@ -30,18 +30,22 @@ exports.getAll = async (req, res) => {
 
 // Supprimer tout l’historique
 exports.deleteAll = async (req, res) => {
+    const { userId } = req.query;
+    if (!userId) return res.status(400).json({ error: 'userId requis' });
     try {
-        await History.deleteMany({});
+        await History.deleteMany({ userId });
         res.status(200).json({ message: 'Historique vidé.' });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
 };
 
+
 // Supprimer une seule entrée
 exports.deleteOne = async (req, res) => {
+    const { userId } = req.query;
     try {
-        const deleted = await History.findByIdAndDelete(req.params.id);
+        const deleted = await History.findOneAndDelete({ _id: req.params.id, userId });
         if (!deleted) return res.status(404).json({ error: 'Entrée non trouvée.' });
         res.status(200).json({ message: 'Entrée supprimée.', deleted });
     } catch (err) {

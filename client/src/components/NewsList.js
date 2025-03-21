@@ -5,7 +5,7 @@ function NewsList({ news, onSelect }) {
   return (
     <div className="news-list">
       {news.map((item) => (
-        <NewsItem key={item.id} news={item} onClick={() => onSelect(item)} />
+          <NewsItem key={item.url} news={item} onClick={() => onSelect(item)} />
       ))}
     </div>
   );

@@ -21,7 +21,7 @@ function NewsItem({ news, onClick }) {
       style={{ cursor: "pointer", padding: "10px", borderBottom: "1px solid #ddd" }}
     >
       <h3>{news.title}</h3>
-      <p>{news.content}</p>
+        <p>{news.description || news.content}</p>
       {news.image && <img src={news.image} alt={news.title} style={{ width: "100px", height: "auto" }} />}
     </div>
   );

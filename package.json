@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "concurrently \"npm run dev --prefix aggregator-service\" \"npm run dev --prefix filtering-service\" \"npm run dev --prefix history-service\" \"npm start --prefix client\"",
+    "start": "npm run dev"
   },
   "keywords": [],
   "author": "",

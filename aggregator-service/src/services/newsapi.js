@@ -3,7 +3,7 @@ const axios = require('axios');
 // Axios instance for NewsAPI
 const newsApiClient = axios.create({
     baseURL: 'https://newsapi.org/v2',
-    params: { apiKey: process.env.NEWSAPI_KEY } // API key from .env
+    params: { apiKey: process.env.NEWSAPI_KEY }
 });
 
 /**

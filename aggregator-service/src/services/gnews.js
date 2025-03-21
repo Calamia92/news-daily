@@ -3,7 +3,7 @@ const axios = require('axios');
 // Axios instance for GNews API
 const gNewsClient = axios.create({
     baseURL: 'https://gnews.io/api/v4',
-    params: { apikey: process.env.GNEWS_KEY } // API key from .env (param name is 'apikey')
+    params: { apikey: process.env.GNEWS_KEY }
 });
 
 /**
