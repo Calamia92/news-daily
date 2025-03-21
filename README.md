@@ -5,7 +5,7 @@ Ce projet est un agrégateur d’actualités filtrable avec historique de consul
 ---
 ## 📁 Structure du dépôt
 ```
-my-aggregator-news/
+news-daily/
 ├── aggregator-service/     # Service d’agrégation des news depuis plusieurs APIs externes
 ├── filtering-service/      # Service de filtrage et recherche sur les news agrégées
 ├── history-service/        # Service d’historique (CRUD sur les consultations)
