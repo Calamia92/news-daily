@@ -12,16 +12,20 @@ async function sendToFilterService(articles) {
     return articles;
   }
 }
+
 /**
  * Controller to get news from all sources, merge them, and return as JSON.
  */
 exports.getNews = async (req, res) => {
     try {
+        // Récupérer le terme de recherche depuis la requête
+        const { keyword } = req.query;
+        
         // Fetch data from all three services in parallel
         const [newsapiResult, nytimesResult, gnewsResult] = await Promise.allSettled([
-            newsapiService.getNews(),
-            nytimesService.getNews(),
-            gnewsService.getNews()
+            newsapiService.getNews(keyword),
+            nytimesService.getNews(keyword),
+            gnewsService.getNews(keyword)
         ]);
 
         // Merge results into one array, include only fulfilled results
@@ -40,6 +44,15 @@ exports.getNews = async (req, res) => {
             aggregatedArticles = aggregatedArticles.concat(gnewsResult.value);
         } else {
             console.error('Error fetching from GNews:', gnewsResult.reason);
+        }
+
+        // Si un mot-clé est fourni, filtrer les articles localement
+        if (keyword) {
+            const keywordLower = keyword.toLowerCase();
+            aggregatedArticles = aggregatedArticles.filter(article => 
+                article.title.toLowerCase().includes(keywordLower) || 
+                (article.description && article.description.toLowerCase().includes(keywordLower))
+            );
         }
 
         // Appel du Filter Service
