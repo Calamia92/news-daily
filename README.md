@@ -34,7 +34,6 @@ Crée un fichier `.env` dans chaque service et dans `client/` avec les variables
 
 ### aggregator-service/.env
 ```
-MONGO_URI=<ton-mongo-uri>
 NEWSAPI_KEY=<clé-newsapi>
 NYT_API_KEY=<clé-nytimes>
 GNEWS_API_KEY=<clé-gnews>
