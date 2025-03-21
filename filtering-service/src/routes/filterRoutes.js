@@ -1,8 +1,13 @@
 const express = require('express');
-const { filterArticles } = require('../controllers/filterController');
-
 const router = express.Router();
 
-router.post('/', filterArticles);
+router.post('/filter', (req, res) => {
+    const { articles } = req.body;
+
+    // Exemple de filtre : Ne garder que les articles contenant le mot 'AI'
+    const filteredArticles = articles.filter(article => article.title.includes('AI'));
+
+    res.json({ filteredArticles });
+});
 
 module.exports = router;
