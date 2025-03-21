@@ -19,7 +19,6 @@ async function sendToFilterService(articles) {
         return articles;
     }
 }
-
 /**
  * Controller to get news from all sources, merge them, optionally filter them, and return as JSON.
  */
