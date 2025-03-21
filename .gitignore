@@ -19,6 +19,9 @@ temp/
 # Fichiers d'environnement (à garder en local)
 .env.*.local
 
+# Fichier d'environnement
+history-service/.env
+
 # Pour Create React App, si vous avez un dossier build généré dans le front-end
 client/build/
 
