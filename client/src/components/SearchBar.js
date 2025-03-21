@@ -1,21 +1,17 @@
 import React from "react";
-import "./SearchBar.css"; // Import du fichier CSS
-import logo from "./assets/images/logo.png"; // Assure-toi du bon chemin du logo
 
-const SearchBar = () => {
-  return (
+const SearchBar = ({ query, setQuery, onSearch }) => (
     <div className="search-container">
-      {/* Logo */}
-      <img src={logo} alt="Logo Actualité" className="logo" />
-
-      {/* Barre de recherche */}
-      <input
-        type="text"
-        placeholder="Rechercher une actualité..."
-        className="search-bar"
-      />
+        <form onSubmit={onSearch} className="search-bar">
+            <input
+                type="text"
+                placeholder="Rechercher une actualité..."
+                value={query}
+                onChange={e => setQuery(e.target.value)}
+            />
+            <button type="submit">🔍</button>
+        </form>
     </div>
-  );
-};
+);
 
 export default SearchBar;

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import SearchBar from "./components/SearchBar";
 import FeaturedNews from "./components/FeaturedNews";
 import NewsList from "./components/NewsList";
 import HistoryDrawer from "./components/HistoryDrawer";
@@ -18,79 +19,47 @@ function App() {
     (async () => {
       try {
         setNews(await fetchNews());
-      } catch (error) {
-        console.error("Erreur API :", error);
-      }
-    })();
-    (async () => {
-      try {
         const res = await getHistory();
         setHistory(res.data);
       } catch (error) {
-        console.error("Erreur chargement historique:", error);
+        console.error(error);
       }
     })();
   }, []);
 
-  const handleSelectNews = async (newsItem) => {
-    try {
-      await addHistory(newsItem);
-      setHistory(prev => [newsItem, ...prev]);
-      setIsDrawerOpen(true);
-    } catch (error) {
-      console.error("Erreur ajout historique:", error);
-    }
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    setNews(await fetchNews({ keyword: query }));
+  };
+
+  const handleSelectNews = async (item) => {
+    await addHistory(item);
+    setHistory(prev => [item, ...prev]);
+    setIsDrawerOpen(true);
   };
 
   const handleClearHistory = async () => {
-    try {
-      await deleteHistory();
-      setHistory([]);
-    } catch (error) {
-      console.error("Erreur suppression historique:", error);
-    }
-  };
-
-  const handleSearch = async (e) => {
-    e.preventDefault();
-    if (!query) return;
-    try {
-      setNews(await fetchNews({ keyword: query }));
-    } catch (error) {
-      console.error("Erreur lors de la recherche :", error);
-    }
+    await deleteHistory();
+    setHistory([]);
   };
 
   return (
       <div className="container">
         <header className="header-container">
-          <img src={logo} alt="Logo du site" className="site-logo" />
-          <form onSubmit={handleSearch} className="search-bar">
-            <input
-                type="text"
-                placeholder="Rechercher une actualité..."
-                value={query}
-                onChange={e => setQuery(e.target.value)}
-            />
-            <button type="submit">🔍</button>
-          </form>
+          <img src={logo} alt="Logo" className="site-logo" />
+          <SearchBar query={query} setQuery={setQuery} onSearch={handleSearch} />
         </header>
-
         <main>
-          {news.length > 0 ? (
+          {news.length ? (
               <>
                 <FeaturedNews news={news[0]} />
                 <NewsList news={news.slice(1)} onSelect={handleSelectNews} />
               </>
-          ) : (
-              <p>Chargement des actualités...</p>
-          )}
+          ) : <p>Chargement…</p>}
         </main>
-
         <button onClick={() => setIsDrawerOpen(true)} className="history-button">
           Voir l'historique
         </button>
-
         <HistoryDrawer
             open={isDrawerOpen}
             onClose={() => setIsDrawerOpen(false)}
