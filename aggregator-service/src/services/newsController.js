@@ -1,9 +1,27 @@
+const axios = require('axios');
 const newsapiService = require('../services/newsapi');
 const nytimesService = require('../services/nytimes');
 const gnewsService = require('../services/gnews');
 
 /**
- * Controller to get news from all sources, merge them, and return as JSON.
+ * Envoie la liste d'articles au service de filtrage via une requête POST.
+ * @param {Array} articles - Tableau d'articles à filtrer
+ * @returns {Promise<Array>} Tableau d'articles filtrés
+ */
+async function sendToFilterService(articles) {
+    try {
+        const response = await axios.post('http://localhost:4000/filter', { articles });
+        // On suppose que le service renvoie un objet { filteredArticles: [...] }
+        return response.data.filteredArticles;
+    } catch (error) {
+        console.error('Erreur lors de l\'envoi au Filter Service :', error);
+        // En cas d'erreur, on renvoie les articles bruts pour ne pas tout bloquer
+        return articles;
+    }
+}
+
+/**
+ * Controller to get news from all sources, merge them, optionally filter them, and return as JSON.
  */
 exports.getNews = async (req, res) => {
     try {
@@ -32,10 +50,12 @@ exports.getNews = async (req, res) => {
             console.error('Error fetching from GNews:', gnewsResult.reason);
         }
 
-        // Respond with the combined list of articles as JSON
-        res.json(aggregatedArticles);
+        // 🔴 Appel du Filter Service (optionnel si tu souhaites filtrer avant la réponse)
+        const filteredArticles = await sendToFilterService(aggregatedArticles);
+
+        // On renvoie le résultat final (filtré ou brut en cas d'erreur)
+        res.json(filteredArticles);
     } catch (err) {
-        // Unexpected error handling
         console.error('Unexpected error in aggregator:', err);
         res.status(500).json({ error: 'Failed to retrieve news articles' });
     }
