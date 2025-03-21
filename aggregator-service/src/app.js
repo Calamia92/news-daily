@@ -1,18 +1,18 @@
-require('dotenv').config();  // Load environment variables from .env
+require('dotenv').config();
 const express = require('express');
-const newsRoutes = require('./services/newsRoutes'); // Updated path
+const cors = require('cors');
+const newsRoutes = require('./routes/newsRoutes');
 
 const app = express();
+
+// Implémentation de CORS
+app.use(cors());
 app.use(express.json());
 
-// Use the news routes
-app.use('/', newsRoutes);
+// Routes
+app.use('/api/news', newsRoutes);
 
-// Health check route (optional)
+// Health check route
 app.get('/health', (req, res) => res.send('Aggregator service is running'));
 
-// Start the server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`aggregator-service listening on port ${PORT}`);
-});
+module.exports = app;
