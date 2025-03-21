@@ -21,6 +21,7 @@ temp/
 
 # Fichier d'environnement
 history-service/.env
+aggregator-service/.env
 
 # Pour Create React App, si vous avez un dossier build généré dans le front-end
 client/build/
