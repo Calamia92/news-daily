@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseURL = process.env.REACT_APP_API_URL; // Assure-toi que cette variable est définie dans ton fichier .env
+const baseURL = process.env.REACT_APP_API_URL; 
 
 export const filterArticles = async (articles, filters) => {
     try {
@@ -8,7 +8,7 @@ export const filterArticles = async (articles, filters) => {
             articles,
             ...filters
         });
-        return response.data.filtered; // Retourne uniquement les articles filtrés
+        return response.data.filtered; 
     } catch (error) {
         console.error("Erreur lors du filtrage des articles:", error);
         return [];
