@@ -8,15 +8,20 @@ const nyTimesClient = axios.create({
 
 /**
  * Fetch news articles from NYTimes Article Search API and normalize them.
+ * @param {string} keyword - Optional search keyword
  * @returns {Promise<Array>} List of news articles with unified fields.
  */
-async function getNews() {
-    // Example: fetch latest news articles (using a broad query term)
+async function getNews(keyword) {
+    // Use the provided keyword or default to 'news'
+    const query = keyword || 'news';
+    
     const response = await nyTimesClient.get('/articlesearch.json', {
-        params: { q: 'news', sort: 'newest' }
+        params: { q: query, sort: 'newest' }
     });
+    
     const data = response.data.response;
     const docs = data && data.docs ? data.docs : [];
+    
     // Normalize the articles to a common format
     return docs.map(doc => ({
         title: doc.headline.main,

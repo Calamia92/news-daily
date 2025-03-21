@@ -31,7 +31,7 @@ router.post('/filter', (req, res) => {
     // 4️⃣ Fallback si rien ne passe → premiers 5 articles originaux
     filtered = bySource.length ? bySource : articles.slice(0, 5);
 
-    return res.json({ filteredArticles: filtered });
+    return res.json({ filteredArticles: filtered });  // Modifié "filtered" en "filteredArticles"
 });
 
 module.exports = router;
